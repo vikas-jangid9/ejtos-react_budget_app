@@ -43,6 +43,7 @@ export const AppReducer = (state, action) => {
                     ...state,
                     expenses: [...red_expenses],
                 };
+
             case 'DELETE_EXPENSE':
             action.type = "DONE";
             state.expenses.map((currentExp)=> {
@@ -70,7 +71,18 @@ export const AppReducer = (state, action) => {
             return {
                 ...state
             }
-
+            case 'SUB_EXPENSE':
+                const sub_expenses = state.expenses.map((currentExp) => {
+                  if (currentExp.name === action.payload.name) {
+                    currentExp.cost = Math.max(0, currentExp.cost - action.payload.cost);
+                  }
+                  return currentExp;
+                });
+              
+                return {
+                  ...state,
+                  expenses: [...sub_expenses],
+                };
         default:
             return state;
     }
